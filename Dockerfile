@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-ENV CEREBRO_VERSION 0.8.1
+ENV CEREBRO_VERSION 0.8.2
 
 RUN apk add --no-cache bash \
  && mkdir -p /opt/cerebro/logs \
