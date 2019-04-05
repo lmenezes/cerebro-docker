@@ -18,5 +18,5 @@ docker run -p 9000:9000 lmenezes/cerebro
 For using a specific version run:
 
 ```
-docker run -p 9000:9000 lmenezes/cerebro:0.8.1
+docker run -p 9000:9000 lmenezes/cerebro:0.8.3
 ```
