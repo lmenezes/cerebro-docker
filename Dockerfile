@@ -1,6 +1,6 @@
 FROM openjdk:11-jre-slim
 
-ENV CEREBRO_VERSION 0.8.3
+ENV CEREBRO_VERSION 0.8.4
 
 RUN  apt-get update \
  && apt-get install -y wget \
