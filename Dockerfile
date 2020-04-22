@@ -13,7 +13,10 @@ RUN  apt-get update \
  && adduser -gid 1000 -uid 1000 cerebro \
  && chown -R cerebro:cerebro /opt/cerebro
 
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
+
 WORKDIR /opt/cerebro
-EXPOSE 9000
 USER cerebro
-ENTRYPOINT [ "/opt/cerebro/bin/cerebro" ]
+
+ENTRYPOINT [ "/entrypoint.sh" ]

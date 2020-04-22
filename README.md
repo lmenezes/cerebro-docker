@@ -20,3 +20,11 @@ For using a specific version run:
 ```
 docker run -p 9000:9000 lmenezes/cerebro:0.8.3
 ```
+
+### Configuration
+
+You can configure a custom port for cerebro by using the `CEREBRO_PORT` environment variable. This defaults to `9000`.
+
+**Example**
+
+docker run -e CEREBRO_PORT=8080 -p 8080:8080 lmenezes/cerebro
