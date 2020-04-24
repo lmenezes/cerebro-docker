@@ -1,6 +1,6 @@
 FROM openjdk:11-jre-slim
 
-ENV CEREBRO_VERSION 0.8.5
+ENV CEREBRO_VERSION 0.9.0
 
 RUN  apt-get update \
  && apt-get install -y wget \
@@ -14,6 +14,6 @@ RUN  apt-get update \
  && chown -R cerebro:cerebro /opt/cerebro
 
 WORKDIR /opt/cerebro
-EXPOSE 9000
 USER cerebro
+
 ENTRYPOINT [ "/opt/cerebro/bin/cerebro" ]
