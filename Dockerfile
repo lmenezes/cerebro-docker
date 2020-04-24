@@ -1,6 +1,6 @@
 FROM openjdk:11-jre-slim
 
-ENV CEREBRO_VERSION 0.8.5
+ENV CEREBRO_VERSION 0.9.0
 
 RUN  apt-get update \
  && apt-get install -y wget \
@@ -13,10 +13,7 @@ RUN  apt-get update \
  && adduser -gid 1000 -uid 1000 cerebro \
  && chown -R cerebro:cerebro /opt/cerebro
 
-ADD entrypoint.sh /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
-
 WORKDIR /opt/cerebro
 USER cerebro
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/opt/cerebro/bin/cerebro" ]
