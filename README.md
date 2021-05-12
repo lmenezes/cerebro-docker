@@ -28,3 +28,7 @@ You can configure a custom port for cerebro by using the `CEREBRO_PORT` environm
 **Example**
 
 docker run -e CEREBRO_PORT=8080 -p 8080:8080 lmenezes/cerebro
+
+To access an elasticsearch instance running on localhost:
+
+docker run -p 9000:9000 --network=host lmenez/cerebro
