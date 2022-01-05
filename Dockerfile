@@ -15,7 +15,9 @@ COPY --from=builder /opt/cerebro /opt/cerebro
 
 RUN addgroup -gid 1000 cerebro \
  && adduser -q --system --no-create-home --disabled-login -gid 1000 -uid 1000 cerebro \
- && chown -R cerebro:cerebro /opt/cerebro
+ && chown -R root:root /opt/cerebro \
+ && chown -R cerebro:cerebro /opt/cerebro/logs \
+ && chown cerebro:cerebro /opt/cerebro
 
 WORKDIR /opt/cerebro
 USER cerebro
