@@ -1,4 +1,4 @@
-FROM openjdk:11.0.10-jre-slim
+FROM openjdk:11.0.13-jre-slim
 
 ENV CEREBRO_VERSION 0.9.4
 
