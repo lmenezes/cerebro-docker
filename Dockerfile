@@ -14,7 +14,7 @@ FROM openjdk:11.0.13-jre-slim
 COPY --from=builder /opt/cerebro /opt/cerebro
 
 RUN addgroup -gid 1000 cerebro \
- && adduser -gid 1000 -uid 1000 cerebro \
+ && adduser -q --system --no-create-home --disabled-login -gid 1000 -uid 1000 cerebro \
  && chown -R cerebro:cerebro /opt/cerebro
 
 WORKDIR /opt/cerebro
