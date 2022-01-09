@@ -1,6 +1,6 @@
 FROM openjdk:11-jre-slim as builder
 
-ENV CEREBRO_VERSION 0.9.4
+ARG CEREBRO_VERSION=0.9.4
 
 RUN  apt-get update \
  && apt-get install -y wget \
@@ -9,7 +9,7 @@ RUN  apt-get update \
   | tar xzv --strip-components 1 -C /opt/cerebro \
  && sed -i '/<appender-ref ref="FILE"\/>/d' /opt/cerebro/conf/logback.xml
 
-FROM openjdk:11.0.13-jre-slim
+FROM openjdk:11-jre-slim
 
 COPY --from=builder /opt/cerebro /opt/cerebro
 

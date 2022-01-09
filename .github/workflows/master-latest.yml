@@ -3,6 +3,13 @@ name: master-latest
 on:
   push:
     branches: [ master ]
+  schedule:
+    - cron: '50 3 * * *' # Scheduled runs every day at 3:50am UTC
+
+env: # Version to build for. Separate to facilitate tagging, done below.
+  MAJOR: 0
+  MINOR: 9
+  PATCH: 4
 
 jobs:
   docker:
@@ -18,14 +25,6 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
-
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildxarch-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildxarch-
 
       - name: Docker Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -47,15 +46,18 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest,ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.sha }}
+          pull: true # Pull new version of base image, always; avoid bit-rot.
           labels: |
-            org.opencontainers.image.title=${{ github.event.repository.name }}
+            org.opencontainers.image.title=${{ github.repository }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
             org.opencontainers.image.url=${{ github.event.repository.html_url }}
             org.opencontainers.image.source=${{ github.event.repository.clone_url }}
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
-          cache-from: type=local,src=/tmp/.buildx-cache/release
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache/release
-
+          cache-from: type=gha # all-automatic Github Actions caching
+          cache-to: type=gha,mode=max
+          build-args: |
+            CEREBRO_VERSION=${{env.MAJOR}}.${{env.MINOR}}.${{env.PATCH}}
+          # Tag :0, :0.9 and :0.9.4 and :latest
+          tags: ghcr.io/${{ github.repository }}:latest,ghcr.io/${{ github.repository }}:${{env.MAJOR}}.${{env.MINOR}}.${{env.PATCH}},ghcr.io/${{ github.repository }}:${{env.MAJOR}}.${{env.MINOR}},ghcr.io/${{ github.repository }}:${{env.MAJOR}}
