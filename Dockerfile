@@ -1,4 +1,4 @@
-FROM openjdk:11.0.13-jre-slim as builder
+FROM openjdk:11-jre-slim as builder
 
 ENV CEREBRO_VERSION 0.9.4
 
